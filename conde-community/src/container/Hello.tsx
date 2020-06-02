@@ -30,7 +30,7 @@ class Hello extends React.Component<Props> {
                 <div>
                     <button onClick = {increment}>+</button>
                     <button onClick = {decrement}>-</button>
-                    {/* {getExclamationMarks(1)} */}
+                    {/* {getExclamationMarks(num)} */}
                     {num}
                 </div>
                 
@@ -49,12 +49,7 @@ class Hello extends React.Component<Props> {
     }
 }
 
- function mapDispatchToProps(dispatch:any){
-    return{
-        onIncrement:()=>{dispatch({type:'INCREMENT'})},
-        onDecrement:decrement
-    }
-}
+
 
 
 function getExclamationMarks(numChars: number) {
