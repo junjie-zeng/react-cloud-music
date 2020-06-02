@@ -2,13 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { Provider } from 'react-redux';
+import store from './redux/store'
 import * as serviceWorker from './serviceWorker';
 // test
 import Hello from './container/Hello'
 ReactDOM.render(
-  <React.StrictMode>
-    <Hello name = "哈哈" age = {18}/>
-  </React.StrictMode>,
+  <Provider store = {store}>
+    <React.StrictMode>
+      <Hello />
+    
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 

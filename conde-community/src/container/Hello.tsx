@@ -1,22 +1,65 @@
 import * as React from 'react'
+import { connect } from 'react-redux';
+import {increment,decrement} from '../redux/actions'
+import {StoreState,StateType} from '../redux/state'
+//import Hello from './HelloUi'
+import '../App.css'
 
-interface Props{
-    name:string,
-    age:number
+
+export interface Props{
+    name:string;
+    num?:number;
+    increment?:()=>any;
+    decrement?:()=>any;
+
 }
 
-
-class Hello extends React.Component<Props>{
-   
+class Hello extends React.Component<Props> {
+    constructor(props:Props){
+        super(props)
+    }
     render(){
-        const {name,age} = this.props
+        const {name,num,increment,decrement} = this.props
+
         return(
 
-            <div>
-                hello,我叫{name}我{age}岁了
+            <div className = "hello">
+                <div >
+                    hello,{name}
+                </div>
+                <div>
+                    <button onClick = {increment}>+</button>
+                    <button onClick = {decrement}>-</button>
+                    {/* {getExclamationMarks(1)} */}
+                    {num}
+                </div>
+                
+                
             </div>
         )
     }
 }
 
-export default Hello
+
+
+ function mapStateToProps({enthusiasm}:StateType) {
+    return {
+        num:enthusiasm.num,
+        name:enthusiasm.name
+    }
+}
+
+ function mapDispatchToProps(dispatch:any){
+    return{
+        onIncrement:()=>{dispatch({type:'INCREMENT'})},
+        onDecrement:decrement
+    }
+}
+
+
+function getExclamationMarks(numChars: number) {
+    return Array(numChars + 1).join('!');
+}
+
+//export default Hello
+export default connect(mapStateToProps,{increment,decrement})(Hello)
