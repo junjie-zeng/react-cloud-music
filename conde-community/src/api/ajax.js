@@ -18,16 +18,7 @@ export default function ajax(url ,data={},method = "GET"){
         	 paramStr += key +"="+ data[key] + "&";
         })
 
-       // if(paramStr){
-           paramStr = paramStr && paramStr.substring(0,paramStr.length-1);
-       // }
-
-         /*if(data){
-             for(var key in data){
-               paramStr += key +"="+ data[key] + "&"
-             }
-         }*/
-
+        paramStr = paramStr && paramStr.substring(0,paramStr.length-1);
 
     	// 使用axios发get请求，返回的是promise对象
         return axios.get(url + "?" +paramStr);
