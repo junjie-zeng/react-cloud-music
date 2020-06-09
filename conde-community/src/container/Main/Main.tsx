@@ -19,6 +19,11 @@ class Main extends React.Component<Props> {
         // 获取所有主题
         getTopic({page:1,limit:10}) 
     }
+
+    // 查看详情
+    handleSeeDetails = ()=>{
+        console.log(32)
+    }
     render(){
         const {topicList} = this.props
         //console.log("主题数据",topicList)// "https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
@@ -39,8 +44,8 @@ class Main extends React.Component<Props> {
                                         thumbStyle={{width:'40px',height:'40px',borderRadius:'50%'}}
                                         extra={<div className = "list-item-box"><div>{v.tab == "share" ? '分享':v.tab == "ask"?'问答':'其他'}</div></div>}
                                     />
-                                    <Card.Body>
-                                    <div>{v.title}</div>
+                                    <Card.Body onClick ={this.handleSeeDetails}>
+                                        <div>{v.title}</div>
                                     </Card.Body>
                                     {/*  content="8天前" */}
                                     <Card.Footer extra={

@@ -5,25 +5,37 @@ import { HashRouter, Switch,Route,Link,Redirect} from 'react-router-dom';
 // 组件
 import Main from './../Main/Main'
 import Classify from './../Classify/Classify'
+import TopicDetail from './../TopicDetail/TopicDetail'
 // antd-mobile
 import { TabBar } from 'antd-mobile'
+
+interface TabBars{
+    title:string;
+    icon:string;
+    selectedIcon:string;
+    selected:boolean;
+    path:string;
+
+}
 
 class Index extends React.Component<any,any> {
     constructor(props:any){
         super(props)
         this.state = {
             tabBars:[
-                {title:'首页',icon:'shouye.svg',selectedIcon:'_shouye.svg',selected:true},
-                {title:'分类',icon:'fenlei.svg',selectedIcon:'_fenlei.svg',selected:false},
-                {title:'消息',icon:'msg.svg',selectedIcon:'_msg.svg',selected:false},
-                {title:'我的',icon:'wode.svg',selectedIcon:'_wode.svg',selected:false}
+                {title:'首页',icon:'shouye.svg',selectedIcon:'_shouye.svg',selected:true,path:'/main'},
+                {title:'分类',icon:'fenlei.svg',selectedIcon:'_fenlei.svg',selected:false,path:'/classify'},
+                {title:'消息',icon:'msg.svg',selectedIcon:'_msg.svg',selected:false,path:'/massage'},
+                {title:'我的',icon:'wode.svg',selectedIcon:'_wode.svg',selected:false,path:'/my'}
             ]
         }
     }
     // 设置tabbar
-    handleSelectTabbar =(index:number)=>{
+    handleSelectTabbar =(index:number,item:TabBars)=>{
         const { tabBars } = this.state
+        const { history } = this.props
         tabBars.forEach((v:any,i:number)=>i===index ? v.selected=true:v.selected=false);
+        history.push(item.path)
         this.setState({
             tabBars
         })
@@ -46,6 +58,7 @@ class Index extends React.Component<any,any> {
                         <Route path = '/classify' component = {Classify}></Route>
                         <Route path = '/massage' component = {Main}></Route>
                         <Route path = '/my' component = {Main}></Route>
+                        {/* <Route path = '/topicdetail' component = {TopicDetail}></Route> */}
                     </Switch>
                 </div>
                 <div className = "footer">
@@ -72,7 +85,7 @@ class Index extends React.Component<any,any> {
                                         background: 'url('+require(`./../../assets/images/${item.selectedIcon}`)+') center center /  21px 21px no-repeat' }}
                                     />
                                     }
-                                    onPress={()=>{this.handleSelectTabbar(index)}}
+                                    onPress={()=>{this.handleSelectTabbar(index,item)}}
                                     >
                                 </TabBar.Item>
                             ))
