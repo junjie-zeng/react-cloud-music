@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 //路由
 import { HashRouter, Switch,Route,Link,Redirect} from 'react-router-dom';
 // 组件
-import HomePage from './../Home-page/Home-page'
+import Main from './../Main/Main'
 import Classify from './../Classify/Classify'
 // antd-mobile
 import { TabBar } from 'antd-mobile'
@@ -31,17 +31,22 @@ class Index extends React.Component<any,any> {
 
     render(){
         const { tabBars } = this.state
+
+        let path = this.props.location.pathname;
+        if(path === '/'){
+            //得到一个重定向的路由路径
+           return <Redirect to='/main'/>
+        }
+
         return(
             <div>
                 <div>
-                    <HashRouter>
-                        <Switch>
-                            <Route path = '/home' component = {HomePage}></Route>
-                            <Route path = '/classify' component = {Classify}></Route>
-                            <Route path = '/massage' component = {HomePage}></Route>
-                            <Route path = '/my' component = {HomePage}></Route>
-                        </Switch>
-                    </HashRouter>
+                    <Switch>
+                        <Route path = '/main' component = {Main}></Route>
+                        <Route path = '/classify' component = {Classify}></Route>
+                        <Route path = '/massage' component = {Main}></Route>
+                        <Route path = '/my' component = {Main}></Route>
+                    </Switch>
                 </div>
                 <div className = "footer">
                     <TabBar

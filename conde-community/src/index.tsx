@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 // import App from './App';
 import { Provider } from 'react-redux';
 import store from './redux/store'
+import { HashRouter, Switch,Route,Link,Redirect} from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 // test
 import Hello from './container/Hello'
@@ -12,8 +13,9 @@ import './index.css';
 ReactDOM.render(
   <Provider store = {store}>
     <React.StrictMode>
-      <Index />
-    
+      <HashRouter>
+        <Route path = "/" component = {Index}></Route>
+      </HashRouter>
     </React.StrictMode>
   </Provider>,
   document.getElementById('root')
