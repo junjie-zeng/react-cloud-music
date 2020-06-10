@@ -7,3 +7,9 @@
 .main-list .list-item-box div{background-color:  gray;color:white;border-radius: 5px; width: 40px;height: 25px;text-align: center;line-height: 25px;}
 .main-list .list-item-opertion{display: flex;justify-content: space-between;}
 .main-list .list-item-opertion .iconfont {margin-right: 5px;}
+
+.detail-center-wap{display: flex; align-items: center;flex: 1;}
+.detail-center-wap img{width:30px;height: 30px;border-radius: 50%;}
+.detail-center-wap span{margin-left: 5px;}
+.detail-content{padding: 0px 20px 20px 20px;margin-top: 50px;height: 600px;overflow: auto;}
+.detail-content img{    width: 100%;}

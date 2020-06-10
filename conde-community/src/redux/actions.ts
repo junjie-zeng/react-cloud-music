@@ -1,6 +1,6 @@
 // 引入api
-import {getTopics} from './../api'
-import {INCREMENT,DECREMENT,GET_SUCCESS,GET_FAIL} from './action-types'
+import {reqTopics,reqTopicDetail} from './../api'
+import {INCREMENT,DECREMENT,GET_SUCCESS,GET_FAIL,GET_TOPIC_LIST,GET_TOPIC_DETAIL} from './action-types'
 
 
 interface Increment{
@@ -9,11 +9,6 @@ interface Increment{
 
 interface Decrement{
     type:DECREMENT
-}
-// 获取主题
-interface GetTopic{
-    page:number
-    limit:number
 }
 
 export type EnthusiasmAction = Increment | Decrement
@@ -24,7 +19,7 @@ export const increment = ()=>{
         dispatch({type:INCREMENT})
     }
 }
-
+// test
 export const decrement = ()=>{
     return (dispatch:any)=>{
         dispatch({type:DECREMENT})
@@ -32,14 +27,34 @@ export const decrement = ()=>{
     }
 }
 
+
+// 获取主题
+interface GetTopic{
+    page:number
+    limit:number
+}
+
 // 获取所有主题异步action
 export const getTopic =({page,limit}:GetTopic)=>{
     return async (dispatch:any)=>{
-        const res = await getTopics({page,limit})
+        const res = await reqTopics({page,limit})
         if(res.status == 200){
             const data = res.data.data
             //console.log(data)
-            dispatch({type:GET_SUCCESS,data})
+            dispatch({type:GET_TOPIC_LIST,data})
         }
     }
+}
+
+// 获取主题详情异步action
+export const getTopicDetail = (id:string)=>{
+    return async (dispatch:any)=>{
+        const res = await reqTopicDetail(id)
+        if(res.status){
+            const data = res.data.data
+            dispatch({type:GET_TOPIC_DETAIL,data})
+        }
+        
+    }
+
 }
