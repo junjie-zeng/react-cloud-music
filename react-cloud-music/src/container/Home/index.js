@@ -1,8 +1,13 @@
 import React from 'react'
-
-function Home (){
+import { renderRoutes } from 'react-router-config'
+function Home (props){
+    const { route } = props
+    console.log(route)
     return(
-        <div>home</div>
+        <div>
+            主页面
+            {renderRoutes (route.routes)}
+        </div>
     )
 }
 
