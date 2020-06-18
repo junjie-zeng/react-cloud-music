@@ -39,7 +39,6 @@ export const Tab = styled.div`
     }
   }
 `
-
 export const TabItem = styled.div`
   height: 100%;
   display: flex;

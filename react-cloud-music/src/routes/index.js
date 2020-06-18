@@ -6,6 +6,7 @@ import Recommend from '../container/Recommend' // 推荐
 import Singers from '../container/Singers' // 歌手
 import Rank from '../container/Rank' // 等级
 
+
 export default [
     {
         path:'/',
@@ -33,3 +34,4 @@ export default [
         ]
     }
 ]
+

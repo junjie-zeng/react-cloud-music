@@ -24,25 +24,25 @@ function Sliber(props){
     return (
         
             <SliderContainer>
-                <div className="before">
-                    <div className="slider-container">
-                        <div className="swiper-wrapper">
-                        {
-                            bannerList.map ((slider,i) => {
-                                return (
-                                    // slider.imageUrl
-                                    <div className="swiper-slide" key={i}>
-                                        <div className="slider-nav">
-                                            <img src={slider.imageUrl} width="100%" height="100%" alt="推荐" />
-                                        </div>
+                <div className="before"></div>
+                <div className="slider-container">
+                    <div className="swiper-wrapper">
+                    {
+                        bannerList.map ((slider,i) => {
+                            return (
+                                // slider.imageUrl
+                                <div className="swiper-slide" key={i}>
+                                    <div className="slider-nav">
+                                        <img src={slider.imageUrl} width="100%" height="100%" alt="推荐" />
                                     </div>
-                                );
-                            })
-                        }
-                        </div>
-                        <div className="swiper-pagination"></div>
+                                </div>
+                            );
+                        })
+                    }
                     </div>
+                    <div className="swiper-pagination"></div>
                 </div>
+                
             </SliderContainer>
        
     )

@@ -3,6 +3,7 @@ import style from '../../assets/global-style'
 
 export const ListWrapper = styled.div`
   max-width: 100%;
+  padding: 5px;
   .title {
     font-weight: 700;
     padding-left: 6px;
@@ -15,7 +16,7 @@ export const List = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 export const ListItem = styled.div`
