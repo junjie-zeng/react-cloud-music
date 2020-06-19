@@ -1,9 +1,93 @@
 import React, { useState,useEffect } from 'react'
 import axios from 'axios'
-function Singers() {
+import Horizen from '../../baseUI/horizen-item'
+import {categoryTypes,alphaTypes} from '../../api/config'
+import { NavContainer } from "./style";
+function Singers() { 
+    let [category,setCategory] = useState('')
+    let [alpha,setAlpha] = useState('')
+    
+    let handleUpdateCategory = (val)=>{
+        setCategory(val)
+    }
+
+    let handleUpdateAlpha = (val)=>{
+        setAlpha(val)
+    }
+
+    return(
+        <NavContainer>
+            <Horizen list = {categoryTypes} title={"分类 (默认热门):"} 
+            oldVal = {category} 
+            handleClick = {handleUpdateCategory}>
+
+            </Horizen>
+            <Horizen list = {alphaTypes} title={"首字母:"} 
+            oldVal = {alpha} 
+            handleClick = {handleUpdateAlpha}>
+                
+            </Horizen>
+        </NavContainer>
+        
+    )
+    
+}
+
+export default React.memo(Singers)
 
 
-    //test
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//test
     // // 列表
     // const [data,setData] = useState({hits:[]})
     // // 初始化字符串
@@ -39,6 +123,3 @@ function Singers() {
     //         </ul>
     //     </div>
     // )
-}
-
-export default React.memo(Singers)
