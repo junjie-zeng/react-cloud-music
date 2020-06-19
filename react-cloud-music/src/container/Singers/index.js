@@ -6,11 +6,11 @@ import { NavContainer } from "./style";
 function Singers() { 
     let [category,setCategory] = useState('')
     let [alpha,setAlpha] = useState('')
-    
+    // 分类事件
     let handleUpdateCategory = (val)=>{
         setCategory(val)
     }
-
+    // 字母事件
     let handleUpdateAlpha = (val)=>{
         setAlpha(val)
     }
