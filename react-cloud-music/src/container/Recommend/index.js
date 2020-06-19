@@ -1,12 +1,13 @@
-import React,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Slider from '../../components/slider'
 import RecommendList from '../../components/list'
-import {Content} from './style'
+import { Content } from './style'
 import Scroll from '../../baseUI/scroll'
 import { connect } from 'react-redux'
-import {getBannerList,getRecommendList} from './store/action'
+import { getBannerList, getRecommendList } from './store/action'
 // 引入 forceCheck 方法
 import { forceCheck } from 'react-lazyload';
+import Loading from './../../baseUI/loading'
 
 function Recommend(props) {
 
@@ -24,48 +25,51 @@ function Recommend(props) {
     //     }
     // });
 
-    const {bannerList,recommendList} = props
-    const {getBannerList,getRecommendList} = props
+    const { bannerList, recommendList, enterLoading } = props
+    const { getBannerList, getRecommendList } = props
 
-    useEffect(()=>{
+    useEffect(() => {
         // 获取banner
         getBannerList()
         // 获取推荐列表
         getRecommendList()
-    },[])
+    }, [])
     //console.log(bannerList)
-    const bannerListJS = bannerList ? bannerList.toJS():[]
-    const recommendListJS = recommendList ? recommendList.toJS():[]
+    const bannerListJS = bannerList ? bannerList.toJS() : []
+    const recommendListJS = recommendList ? recommendList.toJS() : []
     return (
         <Content>
-            <Scroll className = "list" onScroll = {forceCheck}>
+            <Scroll className="list" onScroll={forceCheck}>
                 <div>
                     <Slider bannerList={bannerListJS}></Slider>
                     <RecommendList recommendList={recommendListJS}></RecommendList>
                 </div>
             </Scroll>
+
+            {enterLoading ? <Loading></Loading> : null}
         </Content>
     )
 }
 
 
 // 映射 Redux 全局state到组件的props中
-const mapStateToProps = (state)=>{
-   // console.log(state)
+const mapStateToProps = (state) => {
+    // console.log(state)
     return {
-        bannerList:state.getIn(['recommend','bannerList']),
-        recommendList:state.getIn(['recommend','recommendList']),
+        bannerList: state.getIn(['recommend', 'bannerList']),
+        recommendList: state.getIn(['recommend', 'recommendList']),
+        enterLoading: state.getIn(['recommend', 'enterLoading'])
     }
 }
 
-const mapDispatchToProps = ()=>{
+const mapDispatchToProps = () => {
     return {
         getBannerList,
         getRecommendList
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps())(React.memo(Recommend))
+export default connect(mapStateToProps, mapDispatchToProps())(React.memo(Recommend))
 /*
     为什么在组件中还需要映射dispatch到props上，不能直接传递函数吗，在组件中直接调用异步action函数，函数中拿到返回结果调用dispatch触发reducer更新状态，
 */

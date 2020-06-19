@@ -17,6 +17,11 @@ export const changeRecommendList = (data)=>({
     data:fromJS(data)
 })
 
+export const changeEnterLoading = (data)=>({
+    type:acType.CHANGE_ENTER_LOADING,
+    data
+})
+
 
 
 
@@ -50,6 +55,7 @@ export const getRecommendList = ()=>{
             let res = await getRecommendListRequest()
            // console.log(res)
             dispatch(changeRecommendList(res.result))
+            dispatch(changeEnterLoading(false))
         }catch(err){
             console.log('getRecommendList',err)
         }
