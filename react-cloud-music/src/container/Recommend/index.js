@@ -54,7 +54,7 @@ function Recommend(props) {
 
 // 映射 Redux 全局state到组件的props中
 const mapStateToProps = (state) => {
-    // console.log(state)
+    // console.log(state.getIn(['recommend','bannerList']))
     return {
         bannerList: state.getIn(['recommend', 'bannerList']),
         recommendList: state.getIn(['recommend', 'recommendList']),
@@ -62,14 +62,13 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = () => {
-    return {
-        getBannerList,
-        getRecommendList
-    }
+const functionToProps = {
+    getBannerList,
+    getRecommendList
 }
 
-export default connect(mapStateToProps, mapDispatchToProps())(React.memo(Recommend))
+
+export default connect(mapStateToProps, functionToProps)(React.memo(Recommend))
 /*
     为什么在组件中还需要映射dispatch到props上，不能直接传递函数吗，在组件中直接调用异步action函数，函数中拿到返回结果调用dispatch触发reducer更新状态，
 */
