@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+
+        ├─api                    网路请求代码、工具类函数和相关配置
+        ├─application            项目核心功能
+        ├─assets                 字体配置及全局样式
+        ├─baseUI                 基础 UI 轮子
+        ├─components             可复用的 UI 组件
+        ├─routes                 路由配置文件
+        └─store                  redux 相关文件
+        App.js                   根组件
+        index.js                 入口文件
+        serviceWorker.js         PWA 离线应用配置
+        style.js                 默认样式
+
+        
+        -- 本项目的样式采用 styled-components 来进行开发，也就是利用 css in js 的方式
+            - 引入图标与公共样式
+
+        -- 初始项目搭建
+            - 路由的配置和应用部分 npm install react-router react-router-dom react-router-config --save
+            - renderRoutes 读取路由配置转化为 Route 标签
+                - 该方法只渲染一层路由，如果多层级需再次调用
+
+            - import { fromJS } from 'immutable';
+                - 详细 https://juejin.im/book/5da96626e51d4524ba0fd237/section/5daa8523f265da5ba308506a
+                -- fromJS: 将 JS 对象转换为 immutable 对象。
+                    - fromJS({
+                        count:0
+                    })
+
+                --  toJS: 和 fromJS 功能刚好相反，用来将 immutable 对象转换为 JS 对象
+                    - const jsObj = fromJS({count:0}).toJS ();
+
+                -- getIn 用来获取 immutable 对象属性
+                    - const conunt = fromJS({count:0}).getIn('count')
+
+                -- set 对 immutable 对象的属性赋值
+                    - fromJS({count:0}).set('count',1)
+                
+                -- merge 新数据与旧数据对比，旧数据中不存在的属性直接添加，旧数据中已存在的属性用新数据中的覆盖
+
+            - 公共组件的开发 Home
+                - 利用navLink组件进行路由跳转
+
+            - redux 
+                - 安装依赖：cnpm install redux redux-thunk redux-immutable react-redux immutable --save
+        
+        -- 推荐页
+            - 轮播组件开发 安装： npm install swiper --save
+            - 列表组件
+
+            - 本项目最大的亮点之一就是采用 better-scroll 打造了移动端滑动基础组件，不仅仅可以用在本项目，也可以直接移植到其他所有的移动端 React 项目。
+                - npm install better-scroll@next --save
+
+
+
+            - 每个组件都有自己的reudx，通过导出index.js与reducer.js结合
+            - 图片懒加载 npm install react-lazyload --save
+            - 数据缓存
+
+
+
+
+
+
+
+
+        -- react-hook
+            - hook是react16.8新增的特性，它可以让你在不编写class的情况下使用state以及其它的react特性
+            - hook是什么？
+                - hook是一个特殊的函数，它可以让你钩入react的特性，例如，useState是允许你在react函数组件中添加state的hook
+                - useState Hook ,它让我们在组件函数中存储内部的state
+                
+            - 什么时候会用hook，如果编写函数组件并意识到需要向其添加一些state
+
+
+
+     -->
+</body>
+
+</html>
