@@ -29,10 +29,17 @@ function Recommend(props) {
     const { getBannerList, getRecommendList } = props
 
     useEffect(() => {
+        // 如果页面有数据，则不发请求
+        //immutable 数据结构中长度属性 size
         // 获取banner
-        getBannerList()
+        if(!bannerList.size){
+            getBannerList()
+        }
         // 获取推荐列表
-        getRecommendList()
+        if(!recommendList.size){
+            getRecommendList()
+        }
+       
     }, [])
     //console.log(bannerList)
     const bannerListJS = bannerList ? bannerList.toJS() : []

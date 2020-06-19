@@ -31,7 +31,23 @@
             - renderRoutes 读取路由配置转化为 Route 标签
                 - 该方法只渲染一层路由，如果多层级需再次调用
 
+            - import { fromJS } from 'immutable';
+                - 详细 https://juejin.im/book/5da96626e51d4524ba0fd237/section/5daa8523f265da5ba308506a
+                -- fromJS: 将 JS 对象转换为 immutable 对象。
+                    - fromJS({
+                        count:0
+                    })
 
+                --  toJS: 和 fromJS 功能刚好相反，用来将 immutable 对象转换为 JS 对象
+                    - const jsObj = fromJS({count:0}).toJS ();
+
+                -- getIn 用来获取 immutable 对象属性
+                    - const conunt = fromJS({count:0}).getIn('count')
+
+                -- set 对 immutable 对象的属性赋值
+                    - fromJS({count:0}).set('count',1)
+                
+                -- merge 新数据与旧数据对比，旧数据中不存在的属性直接添加，旧数据中已存在的属性用新数据中的覆盖
 
             - 公共组件的开发 Home
                 - 利用navLink组件进行路由跳转
@@ -50,6 +66,7 @@
 
             - 每个组件都有自己的reudx，通过导出index.js与reducer.js结合
             - 图片懒加载 npm install react-lazyload --save
+            - 数据缓存
 
 
 
