@@ -5,6 +5,9 @@ import {Content} from './style'
 import Scroll from '../../baseUI/scroll'
 import { connect } from 'react-redux'
 import {getBannerList,getRecommendList} from './store/action'
+// 引入 forceCheck 方法
+import { forceCheck } from 'react-lazyload';
+
 function Recommend(props) {
 
     // mock 数据
@@ -35,7 +38,7 @@ function Recommend(props) {
     const recommendListJS = recommendList ? recommendList.toJS():[]
     return (
         <Content>
-            <Scroll className = "list">
+            <Scroll className = "list" onScroll = {forceCheck}>
                 <div>
                     <Slider bannerList={bannerListJS}></Slider>
                     <RecommendList recommendList={recommendListJS}></RecommendList>
