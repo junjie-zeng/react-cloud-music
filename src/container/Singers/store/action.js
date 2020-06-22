@@ -46,7 +46,7 @@ export const changePullDownLoading = (data) => ({
 
 */
 
-// 获取歌手列表
+// 获取热门歌手列表
 export const getHotSingerList = () => {
     return async (dispatch) => {
         try {
@@ -61,7 +61,7 @@ export const getHotSingerList = () => {
     }
 }
 
-// 加载更多热门歌手
+// 获取更多热门歌手
 export const refreshMoreHotSingerList = () => {
     return async (dispatch, getState) => {
         try {
@@ -69,6 +69,7 @@ export const refreshMoreHotSingerList = () => {
             const singerList = getState().getIn(['singers', 'singerList']).toJS()
             let res = await getHotSingerListRequest(pageCount)
             let data = [...singerList, ...res.artists]
+            //console.log(data)
             dispatch(changeSingerList(data))
             dispatch(changePullUpLoading(false))
         }catch(err){
@@ -77,7 +78,7 @@ export const refreshMoreHotSingerList = () => {
     }
 }
 
-// 加载对应类别的歌手
+// 根据类别获取歌手
 export const getSingerList = (category, alpha) => {
     return async (dispatch, getState) => {
         try {
@@ -86,18 +87,22 @@ export const getSingerList = (category, alpha) => {
             dispatch(changeSingerList(data))
             dispatch(changeEnterLoading(false))
             dispatch(changePullDownLoading(false))
+            // console.log(category)
+            // console.log(res)
         } catch (err) {
             console.log('getSingerList', err)
         }
     }
 }
 
-// 加载更多歌手
+// 刷新获取更多歌手列表
 export const refreshMoreSingerList = (category, alpha) => {
     return async (dispatch, getState) => {
         try {
             const pageCount = getState().getIn(['singers', 'pageCount'])
             const singerList = getState().getIn(['singers', 'singerList']).toJS()
+            console.log(singerList)
+            console.log(pageCount)
             const res = await getSingerListRequest(category, alpha, pageCount)
             let data = [...singerList, ...res.artists]
             dispatch(changeSingerList(data))
@@ -107,3 +112,35 @@ export const refreshMoreSingerList = (category, alpha) => {
         }
     }
 }
+
+
+// 根据类型获取歌手列表
+export const getByTypeSingerList = (category, alpha)=>{
+    return async (dispatch,getState)=>{
+        //console.log(alpha)
+        dispatch(changePageCount(0))
+        // 显示加载效果
+        dispatch(changeEnterLoading(true))
+        dispatch(getSingerList(category, alpha, 0))
+    }
+  }
+
+
+// 滑到最底部刷新部分的处理
+export const getPullUpRefresh = (category, alpha, hot, count) =>{
+    return async (dispatch,getState)=>{
+        dispatch(changePullUpLoading(true));
+        // console.log(count)
+        dispatch(changePageCount(count + 1));
+        
+        if(hot){
+            // 获取更多【热门】歌手
+            dispatch(refreshMoreHotSingerList());
+        } else {
+            // 否则获取更多歌手
+            dispatch(refreshMoreSingerList(category, alpha));
+        }
+
+    }    
+    
+  }

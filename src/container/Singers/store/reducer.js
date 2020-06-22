@@ -18,6 +18,7 @@ export default (state = defaultState,action)=>{
             return state.set('pageCount',action.data)
         // 进场loading
         case acType.CHANGE_ENTER_LOADING:
+            //console.log(action)
             return state.set('enterLoading',action.data)
         // 上拉loading
         case acType.CHANGE_PULLUP_LOADING:

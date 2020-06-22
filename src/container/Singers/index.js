@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 import Horizen from '../../baseUI/horizen-item'
 import { categoryTypes, alphaTypes } from '../../api/config'
@@ -12,44 +13,59 @@ import {
     changePageCount,
     changeEnterLoading,
     changePullUpLoading,
-    changePullDownLoading
+    changePullDownLoading,
+    getByTypeSingerList,
+    getPullUpRefresh
 } from './store/action'
-import { connect } from 'react-redux'
+import Loading from '../../baseUI/loading';
+import  LazyLoad, {forceCheck} from 'react-lazyload';
+
 function Singers(props) {
-    //mock 数据
-    // const singerList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(item => {
-    //     return {
-    //         picUrl: "https://p2.music.126.net/uTwOm8AEFFX_BYHvfvFcmQ==/109951164232057952.jpg",
-    //         name: "隔壁老樊",
-    //         accountId: 277313426,
-    //     }
-    // });
+   
+    // props解构
+    const {singerList, enterLoading,pullUpLoading,pullDownLoading,pageCount} = props
+    //const { getHotSingerDispatch,updateDispatch,pullUpRefreshDispatch,pullDownRefreshDispatch } = props
+    const { getHotSingerList ,getByTypeSingerList,getPullUpRefresh} = props
 
     let [category, setCategory] = useState('')
     let [alpha, setAlpha] = useState('')
     // 分类事件
-    let handleUpdateCategory = (val) => {
-        setCategory(val)
+    let handleUpdateCategory = (newVal) => {
+        //console.log(newVal)
+        setCategory(newVal)
+        //updateDispatch(category,val)
+        getByTypeSingerList(newVal,alpha)
     }
     // 字母事件
-    let handleUpdateAlpha = (val) => {
-        setAlpha(val)
+    let handleUpdateAlpha = (newVal) => {
+        console.log(newVal)
+        setAlpha(newVal)
+        //updateDispatch(alpha,val)
+        getByTypeSingerList(category,newVal)
     }
 
-    // props解构
-    const {singerList, enterLoading,pullUpLoading,pullDownLoading,pageCount} = props
-    const { getHotSingerDispatch,updateDispatch,pullUpRefreshDispatch,pullDownRefreshDispatch } = props
+    const handlePullUp = () => {
+        console.log("上拉")
+        //pullUpRefreshDispatch (category, alpha, category === '', pageCount);
+        getPullUpRefresh(category, alpha, category === '', pageCount)
+    };
+      
+    const handlePullDown = () => {
+        console.log("下拉")
+        //pullDownRefreshDispatch (category, alpha);
+    };
 
-
+    
     useEffect(()=>{
         // 获取热门歌手
-        getHotSingerDispatch()
+        getHotSingerList()
     },[])
 
-    const singerListJs = singerList?singerList.toJS():[]
+    const singerListJs = singerList ? singerList.toJS() : []
 
     // 渲染函数 返回歌手列表
     const renderSingerList = () => {
+      
         return (
             <List>
                 {
@@ -57,8 +73,9 @@ function Singers(props) {
                         return (
                             <ListItem key={item.accountId +""+ index}>
                                 <div className="img_wrapper">
-                                    <img src={`${item.picUrl}?param=300*300`} width="100%" height="100%" />
-
+                                    <LazyLoad placeholder={<img width="100%" height="100%" src={require ('./singer.png')} alt="music"/>}>
+                                        <img src={`${item.picUrl}?param=300*300`} width="100%" height="100%" />
+                                    </LazyLoad>
                                 </div>
                                 <span className="name">{item.name}</span>
                             </ListItem>
@@ -82,9 +99,14 @@ function Singers(props) {
 
             </Horizen>
             <ListContainer>
-                <Scorll>
+                <Scorll pullUp={ handlePullUp }
+                        pullDown = { handlePullDown }
+                        pullUpLoading = {pullUpLoading} 
+                        pullDownLoading = { pullDownLoading }
+                        onScroll={forceCheck}>
                     {renderSingerList()}
                 </Scorll>
+                {enterLoading ? <Loading ></Loading> : null}
             </ListContainer>
         </NavContainer>
 
@@ -114,6 +136,7 @@ const mapDispatchToProps = (dispatch) => {
       pullUpRefreshDispatch(category, alpha, hot, count) {
         dispatch(changePullUpLoading(true));
         dispatch(changePageCount(count+1));
+        // 获取更多【热门】歌手否则获取更多歌手
         if(hot){
           dispatch(refreshMoreHotSingerList());
         } else {
@@ -133,7 +156,8 @@ const mapDispatchToProps = (dispatch) => {
     }
   };   
 
-export default connect(mapStateToProps,mapDispatchToProps)(React.memo(Singers))
+//export default connect(mapStateToProps,mapDispatchToProps)(React.memo(Singers))
+export default connect(mapStateToProps,{getHotSingerList,getByTypeSingerList,getPullUpRefresh})(React.memo(Singers))
 
 
 
@@ -177,6 +201,14 @@ export default connect(mapStateToProps,mapDispatchToProps)(React.memo(Singers))
 
 
 
+ //mock 数据
+    // const singerList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(item => {
+    //     return {
+    //         picUrl: "https://p2.music.126.net/uTwOm8AEFFX_BYHvfvFcmQ==/109951164232057952.jpg",
+    //         name: "隔壁老樊",
+    //         accountId: 277313426,
+    //     }
+    // });
 
 
 
