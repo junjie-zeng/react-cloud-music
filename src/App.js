@@ -6,13 +6,17 @@ import { renderRoutes } from 'react-router-config' //renderRoutes 读取路由�
 import store from './store'
 import routes from './routes'
 import { HashRouter } from 'react-router-dom'
+import { Data } from './container/Singers/data'
 function App() {
   return (
     <Provider store = {store}>
       <HashRouter>
         <IconStyle/>
         <GlobalStyle/>
-        { renderRoutes(routes) }
+        <Data>
+           { renderRoutes(routes) }
+        </Data>
+        
       </HashRouter>
     </Provider>
     

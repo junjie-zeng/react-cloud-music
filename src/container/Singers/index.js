@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect ,useContext} from 'react'
 import { connect } from 'react-redux'
 import Horizen from '../../baseUI/horizen-item'
 import { categoryTypes, alphaTypes } from '../../api/config'
@@ -7,27 +7,35 @@ import { NavContainer, ListContainer, List, ListItem } from "./style";
 import { getHotSingerList, getByTypeSingerList,getPullUpRefresh,getPullDownRefresh } from './store/action'
 import Loading from '../../baseUI/loading';
 import  LazyLoad, {forceCheck} from 'react-lazyload';
-
+import { CategoryDataContext ,CHANGE_CATEGORY,CHANGE_ALPHA} from './data'
 function Singers(props) {
     // props解构
     //const { getHotSingerDispatch,updateDispatch,pullUpRefreshDispatch,pullDownRefreshDispatch } = props
     const {singerList, enterLoading,pullUpLoading,pullDownLoading,pageCount} = props
     const { getHotSingerList ,getByTypeSingerList,getPullUpRefresh,getPullDownRefresh} = props
     // 定义状态
-    let [category, setCategory] = useState('')
-    let [alpha, setAlpha] = useState('')
+    // let [category, setCategory] = useState('')
+    // let [alpha, setAlpha] = useState('')
+    
+    let { data,dispatch } = useContext(CategoryDataContext)
+    // 拿到category与alpha值
+    const { category,alpha} = data.toJS() 
+
+
     // 分类事件
     let handleUpdateCategory = (newVal) => {
         //console.log(newVal)
-        setCategory(newVal)
+        //setCategory(newVal)
         //updateDispatch(category,val)
+        dispatch({type:CHANGE_CATEGORY,data:newVal})
         getByTypeSingerList(newVal,alpha)
     }
     // 字母事件
     let handleUpdateAlpha = (newVal) => {
         console.log(newVal)
-        setAlpha(newVal)
+        //setAlpha(newVal)
         //updateDispatch(alpha,val)
+        dispatch({type:CHANGE_ALPHA,data:newVal})
         getByTypeSingerList(category,newVal)
     }
 
@@ -46,7 +54,10 @@ function Singers(props) {
     
     useEffect(()=>{
         // 获取热门歌手
-        getHotSingerList()
+        if(!singerList.size){
+            getHotSingerList()
+        }
+        
     },[])
 
     const singerListJs = singerList ? singerList.toJS() : []
