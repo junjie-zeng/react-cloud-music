@@ -46,20 +46,7 @@ export const changePullDownLoading = (data) => ({
 
 */
 
-// 获取热门歌手列表
-export const getHotSingerList = () => {
-    return async (dispatch) => {
-        try {
-            let res = await getHotSingerListRequest(0)
-            let data = res.artists
-            dispatch(changeSingerList(data))
-            dispatch(changeEnterLoading(false))
-            dispatch(changePullDownLoading(false))
-        } catch (err) {
-            console.log('getHotSingerList', err)
-        }
-    }
-}
+
 
 // 获取更多热门歌手
 export const refreshMoreHotSingerList = () => {
@@ -101,8 +88,8 @@ export const refreshMoreSingerList = (category, alpha) => {
         try {
             const pageCount = getState().getIn(['singers', 'pageCount'])
             const singerList = getState().getIn(['singers', 'singerList']).toJS()
-            console.log(singerList)
-            console.log(pageCount)
+            //console.log(singerList)
+            //console.log(pageCount)
             const res = await getSingerListRequest(category, alpha, pageCount)
             let data = [...singerList, ...res.artists]
             dispatch(changeSingerList(data))
@@ -113,10 +100,28 @@ export const refreshMoreSingerList = (category, alpha) => {
     }
 }
 
+/*
+ * 封装方法并反馈 
+ */
+
+// 获取热门歌手列表
+export const getHotSingerList = () => {
+    return async (dispatch) => {
+        try {
+            let res = await getHotSingerListRequest(0)
+            let data = res.artists
+            dispatch(changeSingerList(data))
+            dispatch(changeEnterLoading(false))
+            dispatch(changePullDownLoading(false))
+        } catch (err) {
+            console.log('getHotSingerList', err)
+        }
+    }
+}
 
 // 根据类型获取歌手列表
 export const getByTypeSingerList = (category, alpha)=>{
-    return async (dispatch,getState)=>{
+    return  (dispatch,getState)=>{
         //console.log(alpha)
         dispatch(changePageCount(0))
         // 显示加载效果
@@ -128,7 +133,7 @@ export const getByTypeSingerList = (category, alpha)=>{
 
 // 滑到最底部刷新部分的处理
 export const getPullUpRefresh = (category, alpha, hot, count) =>{
-    return async (dispatch,getState)=>{
+    return  (dispatch,getState)=>{
         dispatch(changePullUpLoading(true));
         // console.log(count)
         dispatch(changePageCount(count + 1));
@@ -144,3 +149,20 @@ export const getPullUpRefresh = (category, alpha, hot, count) =>{
     }    
     
   }
+
+//顶部下拉刷新
+export const getPullDownRefresh = (category, alpha)=> {
+    return  (dispatch)=>{
+        // 更改下拉刷新加载动态
+        dispatch(changePullDownLoading(true));
+        //属于重新获取数据 count为0
+        dispatch(changePageCount(0));
+        // 如果类别与字母都为空则获取热门歌手
+        if(!category && !alpha){
+            dispatch(getHotSingerList());
+        } else {
+            // 否则根据类别获取
+            dispatch(getSingerList(category, alpha));
+        }
+    }
+}
