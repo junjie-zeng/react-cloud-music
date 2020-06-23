@@ -93,7 +93,7 @@ const Scroll = forwardRef((props, ref) => {
 
         // 解绑
         return () => {
-            bScroll.off('scrollEnd');
+            bScroll.off('scrollEnd',handlePullUp);
         }
 
     }, [pullUp, bScroll,pullUpDebounce]);
@@ -112,7 +112,7 @@ const Scroll = forwardRef((props, ref) => {
         bScroll.on('touchEnd',handlePullDown);
         // 解绑
         return () => {
-            bScroll.off('touchEnd');
+            bScroll.off('touchEnd',handlePullDown);
         }
         
     }, [pullDown, bScroll,pullDownDebounce]);
