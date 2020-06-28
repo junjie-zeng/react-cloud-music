@@ -8,7 +8,7 @@ const changeRankList = (data)=>({
     data:fromJS(data)
 })
 
-// 修改加载效果同步action
+// 修改加载效果同步action 
 const changeLoading = (data)=>({
     type:CHANGE_LOADING,
     data

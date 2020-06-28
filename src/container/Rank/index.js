@@ -22,7 +22,7 @@ function Rank(props) {
     // console.log(globalStartIndex)
     // console.log(officialList)
     // console.log(globalList)
-    
+
     // 详情
     const enterDetail = (detail) => {
         console.log(detail)
@@ -68,7 +68,7 @@ function Rank(props) {
         ) : null;
     }
 
-    // 榜单数据未加载出来之前都给隐藏
+    // 榜单数据未加载出来之前都给隐藏 
     let displayStyle = loading ? { "display": "none" } : { "display": "" };
 
     return (

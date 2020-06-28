@@ -14,5 +14,5 @@ export const getHotSingerListRequest = (count)=>axiosInstance.get(`/top/artists?
 // 获取歌曲列表
 export const getSingerListRequest = (category,alpha,count)=>axiosInstance.get(`/artist/list?cat=${category}&initial=${alpha.toLowerCase()}&offset=${count}`)
 
-// 获取详情
+// 获取详情 
 export const getRankListRequest = ()=>axiosInstance.get(`/toplist/detail`)

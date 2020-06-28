@@ -5,7 +5,7 @@ const defaultState = fromJS({
     rankList:[],
     loading:true
 })
-
+ 
 export default (state=defaultState,action)=>{
     switch (action.type){
         case CHANGE_RANK_LIST:
