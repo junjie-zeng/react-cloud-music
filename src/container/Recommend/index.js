@@ -8,6 +8,7 @@ import { getBannerList, getRecommendList } from './store/action'
 // 引入 forceCheck 方法
 import { forceCheck } from 'react-lazyload';
 import Loading from './../../baseUI/loading'
+import { renderRoutes } from 'react-router-config';
 
 function Recommend(props) {
 
@@ -54,6 +55,8 @@ function Recommend(props) {
             </Scroll>
 
             {enterLoading ? <Loading></Loading> : null}
+            {/* 详情 */}
+            { renderRoutes (props.route.routes) }
         </Content>
     )
 }

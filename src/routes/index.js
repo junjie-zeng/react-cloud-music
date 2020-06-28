@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom'
 import Home from '../container/Home' // 主页
 import Recommend from '../container/Recommend' // 推荐
 import Singers from '../container/Singers' // 歌手
-import Rank from '../container/Rank' // 等级
-
+import Rank from '../container/Rank' // 排行榜
+import Album from '../container/Album' // 专辑
 
 export default [
     {
@@ -21,7 +21,13 @@ export default [
             },
             {
                 path:'/recommend',
-                component:Recommend
+                component:Recommend,
+                routes:[
+                    {
+                        path:'/recommend/:id',
+                        component:Album
+                    }
+                ]
             },
             {
                 path:'/singers',
