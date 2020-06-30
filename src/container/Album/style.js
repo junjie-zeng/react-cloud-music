@@ -1,4 +1,4 @@
-import styled from'styled-components';
+import styled from 'styled-components';
 import style from '../../assets/global-style';
 
 export const Container = styled.div`
@@ -8,7 +8,7 @@ export const Container = styled.div`
   right: 0;
   bottom: 0;
   z-index: 1000;
-  background: ${style ["background-color"]};
+  background: ${style["background-color"]};
   transform-origin: right bottom;
   &.fly-enter, &.fly-appear {
     transform: rotateZ(30deg) translate3d(100%, 0, 0);
@@ -40,4 +40,3 @@ export const Container = styled.div`
 //     transition: transform .3s;
 //     transform: translate3d (100%, 0, 0);
 //   }
-
