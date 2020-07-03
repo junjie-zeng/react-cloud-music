@@ -1,13 +1,18 @@
 import React, { useState, useEffect ,useContext} from 'react'
 import { connect } from 'react-redux'
-import Horizen from '../../baseUI/horizen-item'
+import  LazyLoad, {forceCheck} from 'react-lazyload';
+import { renderRoutes } from 'react-router-config'
 import { categoryTypes, alphaTypes } from '../../api/config'
+import Horizen from '../../baseUI/horizen-item'
+import Loading from '../../baseUI/loading';
 import Scorll from '../../baseUI/scroll'
 import { NavContainer, ListContainer, List, ListItem } from "./style";
 import { getHotSingerList, getByTypeSingerList,getPullUpRefresh,getPullDownRefresh } from './store/action'
-import Loading from '../../baseUI/loading';
-import  LazyLoad, {forceCheck} from 'react-lazyload';
 import { CategoryDataContext ,CHANGE_CATEGORY,CHANGE_ALPHA} from './data'
+
+
+
+
 function Singers(props) {
     // props解构
     //const { getHotSingerDispatch,updateDispatch,pullUpRefreshDispatch,pullDownRefreshDispatch } = props
@@ -51,11 +56,17 @@ function Singers(props) {
         getPullDownRefresh(category, alpha)
     };
 
+    const enterDeatil = (id)=>{
+        console.log('id',id)
+        props.history.push(`/singers/${id}`)
+    }
+
     
     useEffect(()=>{
         // 获取热门歌手
         if(!singerList.size){
             getHotSingerList()
+            
         }
         
     },[])
@@ -70,7 +81,7 @@ function Singers(props) {
                 {
                     singerListJs.map((item, index) => {
                         return (
-                            <ListItem key={item.accountId +""+ index}>
+                            <ListItem key={item.accountId +""+ index} onClick = {()=>{enterDeatil(item.id)}}>
                                 <div className="img_wrapper">
                                     <LazyLoad placeholder={<img width="100%" height="100%" src={require ('./singer.png')} alt="music"/>}>
                                         <img src={`${item.picUrl}?param=300*300`} width="100%" height="100%" />
@@ -107,6 +118,9 @@ function Singers(props) {
                 </Scorll>
                 {enterLoading ? <Loading ></Loading> : null}
             </ListContainer>
+            {/* 子路由 */}
+            {renderRoutes(props.route.routes)}
+
         </NavContainer>
 
     )
