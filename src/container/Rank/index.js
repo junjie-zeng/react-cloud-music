@@ -25,7 +25,7 @@ function Rank(props) {
 
     // 详情
     const enterDetail = (detail) => {
-        console.log(detail)
+        // console.log(detail)
         props.history.push(`/rank/${detail.id}`)
     }
 
@@ -41,7 +41,7 @@ function Rank(props) {
                 {
                     list.map((item,i) => {
                         return (
-                            <ListItem key={i} tracks={item.tracks} onClick={() => enterDetail(item.name)}> 
+                            <ListItem key={i} tracks={item.tracks} onClick={() => enterDetail(item)}> 
                                 <div className="img_wrapper">
                                     <img src={item.coverImgUrl} alt="" />
                                     <div className="decorate"></div>
