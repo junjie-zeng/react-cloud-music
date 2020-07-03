@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect ,useCallback} from 'react'
 import { connect } from 'react-redux'
 import { Container } from './style'
 import { CSSTransition } from 'react-transition-group'
@@ -33,7 +33,7 @@ function Album(props) {
     }, [getAlbumList, id])
 
     // 滚动
-    const handleScroll = (pos) => {
+    const handleScroll = useCallback((pos) => {
         let minScrollY = - HEADER_HEIGHT;
         let percent = Math.abs(pos.y / minScrollY);
         let headerDom = headerEl.current;
@@ -49,12 +49,14 @@ function Album(props) {
             setTitle("歌单");
             setIsMarquee(false);
         }
-    };
+    },[currentAlbum]);
 
     // 返回
-    const handleBack = () => {
+    const handleBack = useCallback(() => {
         setShowStatus(false)
-    }
+    },[])
+
+   // 如果不用 useCallback 包裹，父组件每次执行时会生成不一样的 handleBack 和 handleScroll 函数引用，那么子组件每一次 memo 的结果都会不一样，导致不必要的重新渲染，也就浪费了 memo 的价值。
 
     // console.log(props)
     return (
