@@ -19,3 +19,6 @@ export const getRankListRequest = ()=>axiosInstance.get(`/toplist/detail`)
 
 // 获取专辑
 export const getAlbumDetailRequest = (id)=>axiosInstance.get(`/playlist/detail?id=${id}`)
+
+// 获取歌手信息
+export const getSingerInfoRequest = id => axiosInstance.get (`/artists?id=${id}`)
