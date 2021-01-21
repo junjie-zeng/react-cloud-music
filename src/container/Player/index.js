@@ -10,17 +10,32 @@ import {
     changeFullScreen
 } from "./store/action";
 
+import MiniPlayer from './miniPlayer';
+import NormalPlayer from './normalPlayer';
+
+
 
 
 function Player(props) {
-
-
-
-
+    const { fullScreen } = props;
+    const { toggleFullScreenDispatch } = props;
 
     
+    const currentSong = {
+        al: { picUrl: "https://p1.music.126.net/JL_id1CFwNJpzgrXwemh4Q==/109951164172892390.jpg" },
+        name: "木偶人",
+        ar: [{ name: "薛之谦" }]
+    }
     return (
-        <div>Player</div>
+        <div>
+            <MiniPlayer song={currentSong}
+                fullScreen={fullScreen}
+                toggleFullScreen={toggleFullScreenDispatch} />
+
+            <NormalPlayer song={currentSong}
+                fullScreen={fullScreen}
+                toggleFullScreen={toggleFullScreenDispatch} />
+        </div>
     )
 }
 
@@ -65,4 +80,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 // 将 ui 组件包装成容器组件
-export default connect(mapStateToProps,mapDispatchToProps)(React.memo(Player));
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Player));
